@@ -6,14 +6,21 @@
   			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   			crossorigin="anonymous"></script>
 	<script type="text/javascript">
+	function val_from_array(arg){
+		return randomInt(arg[0], arg[1]);
+	}
+	function randomInt(min, max) {
+	    return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
 
 		Gen = new Object();
 
 		Gen.presets = {}
 		// gsw lp fo vtd sr kw gw 
-		Gen.presets.stereotype_name = {
+
+		Gen.presets.warrior = {
 			gsw: {
-				base: [6, 9],
+				base: [5,6],
 				level: function(level){
 					return 0
 				},
@@ -77,8 +84,136 @@
 			}
 		}
 
-		Gen.presets.warrior = {
+		Gen.presets.archer = {
+			gsw: {
+				base: [5,6],
+				level: function(level){
+					return 0
+				},
+				difficulty: function(difficulty){
+					return Math.floor((difficulty-1)/2);
+				}
+			},
+			fo: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			vtd: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			sr: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			kw: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			gw: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			lp: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			}
+		}
 
+		Gen.presets.mage = {
+			gsw: {
+				base: [5,6],
+				level: function(level){
+					return 0
+				},
+				difficulty: function(difficulty){
+					return Math.floor((difficulty-1)/2);
+				}
+			},
+			fo: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			vtd: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			sr: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			kw: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			gw: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			lp: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			}
 		}
 
 		Gen.params = {};
@@ -96,18 +231,23 @@
 			ver: 0,
 			wil: 0
 		}
-		Gen.generate = function(){
+		Gen.generate = function(stereo){
+			Gen.params.stereotype = stereo;
 			Gen.set_params();
 			Gen.race();
 			$("#race").text(Gen.model.race.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}))
 			$("#aw_gk").text(Gen.aw_gk());
-			$("#aw_gsw").text(Gen.aw_gsw());
-			$("#aw_lp").text(Gen.aw_lp());
-			$("#aw_fo").text(Gen.aw_fo());
-			$("#aw_vtd").text(Gen.aw_vtd());
-			$("#aw_sr").text(Gen.aw_sr());
-			$("#aw_kw").text(Gen.aw_kw());
-			$("#aw_gw").text(Gen.aw_gw());
+
+			["gsw", "lp", "fo", "vtd", "sr", "kw", "gw"].forEach(function(aw_name){
+				$("#aw_" + aw_name).text(Gen.aw_for(aw_name));
+			});
+			$("#aw_gsw").text(Gen.aw_for("gsw"));
+			$("#aw_lp").text(Gen.aw_for("lp"));
+			$("#aw_fo").text(Gen.aw_for("fo"));
+			$("#aw_vtd").text(Gen.aw_for("vtd"));
+			$("#aw_sr").text(Gen.aw_for("sr"));
+			$("#aw_kw").text(Gen.aw_for("kw"));
+			$("#aw_gw").text(Gen.aw_for("gw"));
 		}
 
 		Gen.set_params = function(){
@@ -125,30 +265,18 @@
 			return {mensch: 5, alb: 5, zwerg: 4, gnom: 3, varg: 6}[Gen.model.race]
 		}
 
-		Gen.aw_gsw = function(){
-			return 8;
-		}
-		Gen.aw_lp = function(){
-			return 5;
-		}
-		Gen.aw_fo = function(){
-			return 8;
-		}
-		Gen.aw_vtd = function(){
-			return 20;
-		}
-		Gen.aw_sr = function(){
-			return 0;
-		}
-		Gen.aw_kw = function(){
-			return 17;
-		}
-		Gen.aw_gw = function(){
-			return 17;
-		}
+		Gen.aw_for = function(aw_name){
+			aw = Gen.presets[Gen.params.stereotype][aw_name];
+			val1 = val_from_array(aw.base);
+			val_diff = 0;
+			val_level = 0;
+			extras = 0;
+			if(aw_name == "gsw"){
+				extras = Gen.aw_gk() - 4
+			}
+			return Math.floor(val1 + val_diff + val_level + extras + 0.5);
 
-
-
+		}
 	</script>
 </head>
 <body>
@@ -163,7 +291,9 @@
 		<tr><td>Körp. Widerstand (KW)</td><td><span id="aw_kw"></span></td></tr>
 		<tr><td>Geist. Widerstand (GW)</td><td><span id="aw_gw"></span></td></tr>
 	</table>
-	<button onclick="Gen.generate()">Generate</button>
+	<button onclick="Gen.generate('warrior')">Krieger</button>
+	<button onclick="Gen.generate('archer')">Späher</button>
+	<button onclick="Gen.generate('mage')">Magier</button>
 </body>
 <script type="text/javascript">$(document).ready(Gen.generate);</script>
 </html>
