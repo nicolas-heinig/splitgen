@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+	<title>Gen</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+  			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  			crossorigin="anonymous"></script>
+	<script type="text/javascript">
+
+		Gen = new Object();
+
+		Gen.presets = {}
+		// gsw lp fo vtd sr kw gw 
+		Gen.presets.stereotype_name = {
+			gsw: {
+				base: [6, 9],
+				level: function(level){
+					return 0
+				},
+				difficulty: function(difficulty){
+					return Math.floor((difficulty-1)/2);
+				}
+			},
+			fo: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			vtd: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			sr: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			kw: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			gw: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			},
+			lp: {
+				base: [5,6],
+				level: function(level){
+					return 0;
+				},
+				difficulty: function(difficulty){
+					return 0;
+				}
+			}
+		}
+
+		Gen.presets.warrior = {
+
+		}
+
+		Gen.params = {};
+		Gen.params.level = 1; // Heldengrad
+		Gen.params.stereotype = "warrior"; // Stereotype: "warrior", "mage", "archer"
+		Gen.params.difficulty = 1; // 1 -> Weak, 2 -> Average, 3 -> Strong, 4 -> Boss
+		Gen.model = {}; // Empty character data
+		Gen.model.attr = {
+			aus: 0,
+			bew: 0,
+			int: 0,
+			kon: 0,
+			mys: 0,
+			sta: 0,
+			ver: 0,
+			wil: 0
+		}
+		Gen.generate = function(){
+			Gen.set_params();
+			Gen.race();
+			$("#race").text(Gen.model.race.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}))
+			$("#aw_gk").text(Gen.aw_gk());
+			$("#aw_gsw").text(Gen.aw_gsw());
+			$("#aw_lp").text(Gen.aw_lp());
+			$("#aw_fo").text(Gen.aw_fo());
+			$("#aw_vtd").text(Gen.aw_vtd());
+			$("#aw_sr").text(Gen.aw_sr());
+			$("#aw_kw").text(Gen.aw_kw());
+			$("#aw_gw").text(Gen.aw_gw());
+		}
+
+		Gen.set_params = function(){
+			// Read from user input later on
+			Gen.params.level = 1; // Heldengrad (1 to 4)
+			Gen.params.stereotype = "warrior"; // Stereotype: "warrior", "mage" etc.
+			Gen.params.difficulty = 1; // 1 -> Weak, 2 -> Average, 3 -> Strong, 4 -> Boss
+		}
+
+		Gen.race = function(){
+			Gen.model.race = "mensch" // "mensch", "gnom", "alb", "varg", "zwerg"
+		}
+
+		Gen.aw_gk = function(){
+			return {mensch: 5, alb: 5, zwerg: 4, gnom: 3, varg: 6}[Gen.model.race]
+		}
+
+		Gen.aw_gsw = function(){
+			return 8;
+		}
+		Gen.aw_lp = function(){
+			return 5;
+		}
+		Gen.aw_fo = function(){
+			return 8;
+		}
+		Gen.aw_vtd = function(){
+			return 20;
+		}
+		Gen.aw_sr = function(){
+			return 0;
+		}
+		Gen.aw_kw = function(){
+			return 17;
+		}
+		Gen.aw_gw = function(){
+			return 17;
+		}
+
+
+
+	</script>
+</head>
+<body>
+	<table>
+		<tr><td>Rasse</td><td><span id="race"></span></td></tr>
+		<tr><td>Größenkategorie (GK)</td><td><span id="aw_gk"></span></td></tr>
+		<tr><td>Geschwindigkeit (GSW)</td><td><span id="aw_gsw"></span></td></tr>
+		<tr><td>Lebenspunkte (LP)</td><td><span id="aw_lp"></span></td></tr>
+		<tr><td>Fokus (FO)</td><td><span id="aw_fo"></span></td></tr>
+		<tr><td>Verteidigung (VTD)</td><td><span id="aw_vtd"></span></td></tr>
+		<tr><td>Schadensreduktion (SR)</td><td><span id="aw_sr"></span></td></tr>
+		<tr><td>Körp. Widerstand (KW)</td><td><span id="aw_kw"></span></td></tr>
+		<tr><td>Geist. Widerstand (GW)</td><td><span id="aw_gw"></span></td></tr>
+	</table>
+	<button onclick="Gen.generate()">Generate</button>
+</body>
+<script type="text/javascript">$(document).ready(Gen.generate);</script>
+</html>
