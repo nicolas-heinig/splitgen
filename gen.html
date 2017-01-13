@@ -6,17 +6,13 @@
   			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   			crossorigin="anonymous"></script>
 	<script type="text/javascript">
-	function val_from_array(arg){
-		return randomInt(arg[0], arg[1]);
-	}
-	function randomInt(min, max) {
-	    return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
+		function randomInt(min, max) {
+		    return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
 
 		Gen = new Object();
 
 		Gen.presets = {}
-		// gsw lp fo vtd sr kw gw 
 
 		Gen.presets.warrior = {
 			gsw: {
@@ -29,57 +25,57 @@
 				}
 			},
 			fo: {
-				base: [5,6],
+				base: [8,10],
 				level: function(level){
-					return 0;
+					return [0,2,2,4][level - 1];
 				},
 				difficulty: function(difficulty){
 					return 0;
 				}
 			},
 			vtd: {
-				base: [5,6],
+				base: [20,24],
 				level: function(level){
-					return 0;
+					return [0,2,4,6][level - 1];
 				},
 				difficulty: function(difficulty){
-					return 0;
+					return [0,1,1,2][difficulty - 1];
 				}
 			},
 			sr: {
-				base: [5,6],
+				base: [0, 1],
 				level: function(level){
-					return 0;
+					return [0,0,1,1][level - 1];
 				},
 				difficulty: function(difficulty){
-					return 0;
+					return [0,0,1,2][difficulty - 1];
 				}
 			},
 			kw: {
-				base: [5,6],
+				base: [17,20],
 				level: function(level){
-					return 0;
+					return [0,2,4,6][level - 1];
 				},
 				difficulty: function(difficulty){
-					return 0;
+					return [0,1,1,2][difficulty - 1];
 				}
 			},
 			gw: {
-				base: [5,6],
+				base: [16,19],
 				level: function(level){
-					return 0;
+					return [0,2,4,6][level - 1];
 				},
 				difficulty: function(difficulty){
-					return 0;
+					return [0,1,2,2][difficulty - 1];
 				}
 			},
 			lp: {
-				base: [5,6],
+				base: [8, 10],
 				level: function(level){
-					return 0;
+					return [0,1,2,3][level - 1];
 				},
 				difficulty: function(difficulty){
-					return 0;
+					return [0,0,1,2][difficulty - 1];
 				}
 			}
 		}
@@ -216,6 +212,11 @@
 			}
 		}
 
+
+		Gen.val_from_array = function(arg){
+			return randomInt(arg[0], arg[1]);
+		}
+
 		Gen.params = {};
 		Gen.params.level = 1; // Heldengrad
 		Gen.params.stereotype = "warrior"; // Stereotype: "warrior", "mage", "archer"
@@ -231,7 +232,8 @@
 			ver: 0,
 			wil: 0
 		}
-		Gen.generate = function(stereo){
+
+		Gen.generate = function(stereo = "warrior"){		
 			Gen.params.stereotype = stereo;
 			Gen.set_params();
 			Gen.race();
@@ -241,13 +243,6 @@
 			["gsw", "lp", "fo", "vtd", "sr", "kw", "gw"].forEach(function(aw_name){
 				$("#aw_" + aw_name).text(Gen.aw_for(aw_name));
 			});
-			$("#aw_gsw").text(Gen.aw_for("gsw"));
-			$("#aw_lp").text(Gen.aw_for("lp"));
-			$("#aw_fo").text(Gen.aw_for("fo"));
-			$("#aw_vtd").text(Gen.aw_for("vtd"));
-			$("#aw_sr").text(Gen.aw_for("sr"));
-			$("#aw_kw").text(Gen.aw_for("kw"));
-			$("#aw_gw").text(Gen.aw_for("gw"));
 		}
 
 		Gen.set_params = function(){
@@ -264,11 +259,20 @@
 			return {mensch: 5, alb: 5, zwerg: 4, gnom: 3, varg: 6}[Gen.model.race]
 		}
 
+		Gen.difficulty_val = function(aw) {
+			return aw.difficulty(Gen.params.difficulty);
+		}
+
+		Gen.level_val = function(aw){
+			return aw.level(Gen.params.level);
+		}
+
 		Gen.aw_for = function(aw_name){
+			
 			aw = Gen.presets[Gen.params.stereotype][aw_name];
-			val1 = val_from_array(aw.base);
-			val_diff = 0;
-			val_level = 0;
+			val1 = Gen.val_from_array(aw.base);
+			val_diff = Gen.difficulty_val(aw);
+			val_level = Gen.level_val(aw);
 			extras = 0;
 			if(aw_name == "gsw"){
 				extras = Gen.aw_gk() - 4
@@ -294,5 +298,7 @@
 	<button onclick="Gen.generate('archer')">Späher</button>
 	<button onclick="Gen.generate('mage')">Magier</button>
 </body>
-<script type="text/javascript">$(document).ready(Gen.generate);</script>
+<script type="text/javascript">$(document).ready(function(){
+	Gen.generate("warrior");
+	});</script>
 </html>
