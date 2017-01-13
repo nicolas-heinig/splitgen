@@ -254,7 +254,8 @@
 		}
 
 		Gen.race = function(){
-			Gen.model.race = "mensch" // "mensch", "gnom", "alb", "varg", "zwerg"
+			const RACES = ["mensch", "gnom", "alb", "varg", "zwerg"];
+			Gen.model.race = RACES[randomInt(0, RACES.length - 1)]
 		}
 
 		Gen.aw_gk = function(){
