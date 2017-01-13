@@ -214,6 +214,32 @@
 			}
 		}
 
+		Gen.presets.weapons = [
+			{
+				name: "Schwert",
+				wgs: 8,
+				dmg: "W6 + 1",
+				kind: "light"
+			},
+			{
+				name: "Streitkolbken",
+				wgs: 11,
+				dmg: "W10 + 3",
+				kind: "heavy"
+			},
+			{
+				name: "Kurzbogen",
+				wgs: 10,
+				dmg: "W10 + 1",
+				kind: "range"
+			},
+			{
+				name: "Feuerball",
+				wgs: 7,
+				dmg: "3W6 + 5",
+				kind: "spell"
+			}
+		]
 
 		Gen.val_from_array = function(arg){
 			return randomInt(arg[0], arg[1]);
