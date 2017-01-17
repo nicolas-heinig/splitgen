@@ -93,7 +93,7 @@
 
 		Gen.presets.archer = {
 			gsw: {
-				base: [5,6],
+				base: [8,10],
 				level: function(level){
 					return 0
 				},
@@ -102,7 +102,7 @@
 				}
 			},
 			fo: {
-				base: [5,6],
+				base: [8,10],
 				level: function(level){
 					return 0;
 				},
@@ -111,16 +111,16 @@
 				}
 			},
 			vtd: {
-				base: [5,6],
+				base: [18,20],
 				level: function(level){
-					return 0;
+					return [0,2,4,6][level - 1];
 				},
 				difficulty: function(difficulty){
-					return 0;
+					return [0,0,1,2][difficulty - 1]
 				}
 			},
 			sr: {
-				base: [5,6],
+				base: [0, 0],
 				level: function(level){
 					return 0;
 				},
@@ -129,30 +129,39 @@
 				}
 			},
 			kw: {
-				base: [5,6],
+				base: [16,18],
 				level: function(level){
-					return 0;
+					return [0,2,4,6][level - 1];
 				},
 				difficulty: function(difficulty){
-					return 0;
+					return [0,0,1,2][difficulty - 1]
 				}
 			},
 			gw: {
-				base: [5,6],
+				base: [16,18],
 				level: function(level){
-					return 0;
+					return [0,2,4,6][level - 1];
 				},
 				difficulty: function(difficulty){
 					return 0;
 				}
 			},
 			lp: {
-				base: [5,6],
+				base: [6,8],
 				level: function(level){
-					return 0;
+					return [0,1,2,3][level - 1];
 				},
 				difficulty: function(difficulty){
-					return 0;
+					return [0,0,1,2][difficulty - 1];
+				}
+			},
+			fight_skill: {
+				base: [9,13],
+				level: function(level) {
+					return [0,2,4,7][level - 1];
+				},
+				difficulty: function(difficulty) {
+					return [0,1,2,4][difficulty - 1];
 				}
 			}
 		}
@@ -219,6 +228,15 @@
 				},
 				difficulty: function(difficulty){
 					return 0;
+				}
+			},
+			fight_skill: {
+				base: [9,13],
+				level: function(level) {
+					return [0,2,4,7][level - 1];
+				},
+				difficulty: function(difficulty) {
+					return [0,1,2,4][difficulty - 1];
 				}
 			}
 		}
