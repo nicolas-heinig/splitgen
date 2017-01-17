@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Gen</title>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+	<script src="jquery-3.1.1.min.js"
   			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   			crossorigin="anonymous"></script>
 
@@ -396,10 +396,25 @@
 				return weapon.name + "; " + weapon.wgs + " Ticks" + "; " + weapon.dmg;
 			}
 			if (Gen.params.stereotype == "archer") {
-				// TODO
+				choosen_weapons = Gen.presets.weapons.filter(function(item) {
+					return (item.kind == "range");
+				});
+				weapon_range = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
+				choosen_weapons = Gen.presets.weapons.filter(function(item) {
+					return (item.kind == "range");
+				});
+				weapon_meele = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
+				tmp = weapon_range.name + "; " + weapon_range.wgs + " Ticks" + "; " + weapon_range.dmg;
+				tmp += "<br>";
+				tmp += weapon_meele.name + "; " + weapon_meele.wgs + " Ticks" + "; " + weapon_meele.dmg;
+				return tmp;
 			}
 			if (Gen.params.stereotype == "mage") {
-				// TODO
+				choosen_weapons = Gen.presets.weapons.filter(function(item) {
+					return (item.kind == "mage");
+				});
+				weapon = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
+				return weapon.name + "; " + weapon.wgs + " Ticks" + "; " + weapon.dmg;
 			}
 		}
 
