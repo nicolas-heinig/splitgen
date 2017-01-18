@@ -11,6 +11,9 @@
 		function randomInt(min, max) {
 		    return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
+		function randomItem(tarray) {
+			return tarray[[Math.floor(Math.random()*tarray.length)]];
+		}
 
 		Gen = new Object();
 
@@ -88,6 +91,15 @@
 				difficulty: function(difficulty) {
 					return [0,1,2,4][difficulty - 1];
 				}
+			},
+			magic_skill: {
+				base: [7,10],
+				level: function(level) {
+					return [0,2,3,5][level - 1];
+				},
+				difficulty: function(difficulty) {
+					return [0,0,1,2][difficulty - 1];
+				}
 			}
 		}
 
@@ -163,6 +175,15 @@
 				difficulty: function(difficulty) {
 					return [0,1,2,4][difficulty - 1];
 				}
+			},
+			magic_skill: {
+				base: [8,10],
+				level: function(level) {
+					return [0,2,3,5][level - 1];
+				},
+				difficulty: function(difficulty) {
+					return [0,0,0,2][difficulty - 1];
+				}
 			}
 		}
 
@@ -231,12 +252,21 @@
 				}
 			},
 			fight_skill: {
-				base: [9,13],
+				base: [7,10],
 				level: function(level) {
 					return [0,2,4,7][level - 1];
 				},
 				difficulty: function(difficulty) {
 					return [0,1,2,4][difficulty - 1];
+				}
+			},
+			magic_skill: {
+				base: [9,13],
+				level: function(level) {
+					return [0,2,4,7][level - 1];
+				},
+				difficulty: function(difficulty) {
+					return [0,1,1,2][difficulty - 1];
 				}
 			}
 		}
@@ -309,20 +339,24 @@
 			{
 				name: "Feuerball",
 				descr: "5V2|8T|VTD:Ziel|2W6+5",
-				mage_only: true
+				mage_only: true,
+				damage: true
 			},
 			{
 				name: "Geh noch nicht", 
 				descr: "K8V2|5T|21|Setzt Sterb.1+2 aus",
-				mage_only: true
+				mage_only: true,
+				damage: false
 			},
 			{
 				name: "Rindenhaut",
-				descr: "K4V1|3T|18|+1 VTD, +1 SR"
+				descr: "K4V1|3T|18|+1 VTD, +1 SR",
+				damage: false
 			},
 			{
 				name: "Schmerzen widerstehen",
-				descr: "K8V2|4T|21|-3 Wundabzüge"
+				descr: "K8V2|4T|21|-3 Wundabzüge",
+				damage: false
 			}
 		]
 
@@ -358,7 +392,9 @@
 			});
 			
 			$("#fight_skill").text(Gen.fight_skill());
-			$("#weapon").text(Gen.get_weapon());
+			$("#magic_skill").text(Gen.magic_skill());
+			$("#weapon").html(Gen.get_weapon());
+			$("#spells").html(Gen.get_spells());
 		}
 
 		Gen.set_params = function(){
@@ -405,6 +441,14 @@
 			return Math.floor(val1 + val_diff + val_level + extras + 0.5);
 		}
 
+		Gen.magic_skill = function(){
+			skill = Gen.presets[Gen.params.stereotype].magic_skill;
+			val1 = Gen.val_from_array(skill.base);
+			val_diff = Gen.difficulty_val(skill);
+			val_level = Gen.level_val(skill);
+			return Math.floor(val1 + val_diff + val_level + extras + 0.5);
+		}
+
 		Gen.get_weapon = function() {
 			if (Gen.params.stereotype == "warrior") {
 				choosen_weapons = Gen.presets.weapons.filter(function(item) {
@@ -436,6 +480,27 @@
 			}
 		}
 
+		Gen.get_spells = function() {
+			if (Gen.params.stereotype == "mage") {
+				possible_dmg_spells = Gen.presets.spells.filter(function(item) {
+					return item.damage;
+				});
+				possible_spells = Gen.presets.spells.filter(function(item) {
+					return !(item.damage);
+				});
+				dmg_spell = randomItem(possible_dmg_spells);
+				spell = randomItem(possible_spells);
+				answer = dmg_spell.name + " " + dmg_spell.descr + "<br>" + spell.name + " " + spell.descr;
+				return answer.replace(/\|/g, " | ");
+			}else{
+				possible_spells = Gen.presets.spells.filter(function(item) {
+					return !(item.mage_only);
+				});
+				spell = randomItem(possible_spells);
+				return (spell.name + " " + spell.descr).replace(/\|/g, " | ");
+			}
+		}
+
 
 	</script>
 </head>
@@ -451,7 +516,9 @@
 		<tr><td>Körp. Widerstand (KW)</td><td><span id="aw_kw"></span></td></tr>
 		<tr><td>Geist. Widerstand (GW)</td><td><span id="aw_gw"></span></td></tr>
 		<tr><td>Kampfskill</td><td><span id="fight_skill"></span></td></tr>
+		<tr><td>Magieskill</td><td><span id="magic_skill"></span></td></tr>
 		<tr><td>Waffe</td><td><span id="weapon"></span></td></tr>
+		<tr><td>Zauber</td><td><span id="spells"></span></td></tr>
 	</table>
 	<button onclick="Gen.generate('warrior')">Krieger</button>
 	<button onclick="Gen.generate('archer')">Späher</button>
