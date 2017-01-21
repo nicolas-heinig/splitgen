@@ -337,26 +337,42 @@
 
 		Gen.presets.spells = [
 			{
-				name: "Feuerball",
+				name: "Feuerstrahl",
 				descr: "5V2|8T|VTD:Ziel|2W6+5",
 				mage_only: true,
-				damage: true
+				damage: true,
+				tier: 2,
+				extra: "1EG/1V1 Brennend 1"
 			},
 			{
 				name: "Geh noch nicht", 
 				descr: "K8V2|5T|21|Setzt Sterb.1+2 aus",
 				mage_only: true,
-				damage: false
+				damage: false,
+				tier: 2,
+				extra: "2EG/K2V2 auch Sterbend 3"
+			},
+			{
+				name: "Tiere beherrschen",
+				descr: "K8V2|6T|GW:Ziel|Kontrolle(GK7)",
+				mage_only: true,
+				damage: false,
+				tier: 2,
+				extra: "2EG/K2V2 Zweites Tier <= GW"
 			},
 			{
 				name: "Rindenhaut",
 				descr: "K4V1|3T|18|+1 VTD, +1 SR",
-				damage: false
+				damage: false,
+				tier: 1,
+				extra: "2EG/K1V1 +1 extra SR"
 			},
 			{
 				name: "Schmerzen widerstehen",
 				descr: "K8V2|4T|21|-3 Wundabzüge",
-				damage: false
+				tier: 1,
+				damage: false,
+				extra: "1EG/K2V2 -4 Wundabzüge"
 			}
 		]
 
@@ -467,8 +483,10 @@
 				});
 				weapon_meele = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
 				tmp = weapon_range.name + "; " + weapon_range.wgs + " Ticks" + "; " + weapon_range.dmg;
+				weapon_range.extra ? tmp += " [" + weapon_range.extra + "]" : false;
 				tmp += "<br>";
 				tmp += weapon_meele.name + "; " + weapon_meele.wgs + " Ticks" + "; " + weapon_meele.dmg;
+				weapon_meele.extra ? tmp += " [" + weapon_meele.extra + "]" : false;
 				return tmp;
 			}
 			if (Gen.params.stereotype == "mage") {
@@ -490,14 +508,15 @@
 				});
 				dmg_spell = randomItem(possible_dmg_spells);
 				spell = randomItem(possible_spells);
-				answer = dmg_spell.name + " " + dmg_spell.descr + "<br>" + spell.name + " " + spell.descr;
+				answer = dmg_spell.name + " " + dmg_spell.descr + " [" + dmg_spell.extra + "]";
+				answer += "<br>" + spell.name + " " + spell.descr + " [" + spell.extra + "]";
 				return answer.replace(/\|/g, " | ");
 			}else{
 				possible_spells = Gen.presets.spells.filter(function(item) {
 					return !(item.mage_only);
 				});
 				spell = randomItem(possible_spells);
-				return (spell.name + " " + spell.descr).replace(/\|/g, " | ");
+				return (spell.name + " " + spell.descr).replace(/\|/g, " | ") + " [" + spell.extra + "]";
 			}
 		}
 
@@ -523,7 +542,7 @@
 	<button onclick="Gen.generate('warrior')">Krieger</button>
 	<button onclick="Gen.generate('archer')">Späher</button>
 	<button onclick="Gen.generate('mage')">Magier</button>
-	
+
 	<script type="text/javascript">$(document).ready(function(){
 		Gen.generate("warrior");
 		});</script>
