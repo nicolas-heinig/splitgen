@@ -288,13 +288,13 @@
 				name: "Dolch", 
 				wgs: 6,
 				dmg: "W6 + 1",
-				kind: "mage"
+				kind: "secondary"
 			},
 			{
 				name: "Scheibendolch",
 				wgs: 6,
 				dmg: "W6",
-				kind: "mage",
+				kind: "secondary",
 				extra: "1 Durchdringung"
 			},
 			{
@@ -463,7 +463,7 @@
 				});
 				weapon_range = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
 				choosen_weapons = Gen.presets.weapons.filter(function(item) {
-					return (item.kind == "range");
+					return (item.kind == "secondary");
 				});
 				weapon_meele = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
 				tmp = weapon_range.name + "; " + weapon_range.wgs + " Ticks" + "; " + weapon_range.dmg;
@@ -473,7 +473,7 @@
 			}
 			if (Gen.params.stereotype == "mage") {
 				choosen_weapons = Gen.presets.weapons.filter(function(item) {
-					return (item.kind == "mage");
+					return (item.kind == "mage" || item.kind == "secondary");
 				});
 				weapon = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
 				return weapon.name + "; " + weapon.wgs + " Ticks" + "; " + weapon.dmg;
