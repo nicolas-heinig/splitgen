@@ -2,10 +2,11 @@
 <html>
 <head>
 	<title>Gen</title>
+	<script src="jquery-3.1.1.min.js"></script>
 	<link	rel="stylesheet"
 			href="bootstrap.min.css">
+	<script src="tether.min.js"></script>
 	<script src="bootstrap.min.js"></script>
-	<script src="jquery-3.1.1.min.js"></script>
 
   	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -525,10 +526,16 @@
 
 
 	</script>
+
+	<style type="text/css">
+		.table.tcentered td {
+		   text-align: center;   
+		}
+	</style>
 </head>
-<body>
-<br><br>
-	<div class="container">
+<body
+><br><br>
+	<div class="container" id="splitgen_container">
 		<div class="card">
 			<h3 class="card-header">Splittermond CharGen by jaritt</h3>
 				<div class="card-block">
@@ -537,19 +544,35 @@
 						<div class="container">
 							<div class="row">
 								<div class="col">
-									<table class="table table-hover table-bordered table-striped">
-										<tr><td>Größenkategorie (GK)</td><td><span id="aw_gk"></span></td></tr>
-										<tr><td>Geschwindigkeit (GSW)</td><td><span id="aw_gsw"></span></td></tr>
-										<tr><td>Lebenspunkte (LP)</td><td><span id="aw_lp"></span></td></tr>
-										<tr><td>Fokus (FO)</td><td><span id="aw_fo"></span></td></tr>
+									<table class="table table-hover table-bordered table-striped tcentered">
+										<tr>
+											<td style="width:25%">GK</td>
+											<td style="width:25%">GSW</td>
+											<td style="width:25%">LP</td>
+											<td style="width:25%">FO</td>
+										</tr>
+										<tr>
+											<td style="width:25%"><span id="aw_gk"></span></td>
+											<td style="width:25%"><span id="aw_gsw"></span></td>
+											<td style="width:25%"><span id="aw_lp"></span></td>
+											<td style="width:25%"><span id="aw_fo"></span></td>
+										</tr>
 									</table>
 								</div>
 								<div class="col">
-									<table class="table table-hover table-bordered table-striped">
-										<tr><td>Verteidigung (VTD)</td><td><span id="aw_vtd"></span></td></tr>
-										<tr><td>Schadensreduktion (SR)</td><td><span id="aw_sr"></span></td></tr>
-										<tr><td>Körp. Widerstand (KW)</td><td><span id="aw_kw"></span></td></tr>
-										<tr><td>Geist. Widerstand (GW)</td><td><span id="aw_gw"></span></td></tr>
+									<table class="table table-hover table-bordered table-striped tcentered">
+										<tr>
+											<td style="width:25%">VTD</td>
+											<td style="width:25%">SR</td>
+											<td style="width:25%">KW</td>
+											<td style="width:25%">GW</td>
+										</tr>
+										<tr>
+											<td style="width:25%"><span id="aw_vtd"></span></td>
+											<td style="width:25%"><span id="aw_sr"></span></td>
+											<td style="width:25%"><span id="aw_kw"></span></td>
+											<td style="width:25%"><span id="aw_gw"></span></td>
+										</tr>
 									</table>
 								</div>
 							</div>
@@ -590,5 +613,16 @@
 				</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		// Design Switcher
+		function fullDesign(){
+			console.log("In here");
+			$.get("./full_design.html", function(html) {
+				console.log("Done");
+				console.log(html);
+				$("#splitgen_container").html(html);
+			});
+		}
+	</script>
 </body>
 </html>
