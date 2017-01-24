@@ -2,6 +2,13 @@
 <html>
 <head>
 	<title>Gen</title>
+	<link	rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+			integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+			crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+			integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+			crossorigin="anonymous"></script>
 	<script src="jquery-3.1.1.min.js"
   			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   			crossorigin="anonymous"></script>
@@ -524,27 +531,68 @@
 	</script>
 </head>
 <body>
-	<table>
-		<tr><td>Rasse</td><td><span id="race"></span></td></tr>
-		<tr><td>Größenkategorie (GK)</td><td><span id="aw_gk"></span></td></tr>
-		<tr><td>Geschwindigkeit (GSW)</td><td><span id="aw_gsw"></span></td></tr>
-		<tr><td>Lebenspunkte (LP)</td><td><span id="aw_lp"></span></td></tr>
-		<tr><td>Fokus (FO)</td><td><span id="aw_fo"></span></td></tr>
-		<tr><td>Verteidigung (VTD)</td><td><span id="aw_vtd"></span></td></tr>
-		<tr><td>Schadensreduktion (SR)</td><td><span id="aw_sr"></span></td></tr>
-		<tr><td>Körp. Widerstand (KW)</td><td><span id="aw_kw"></span></td></tr>
-		<tr><td>Geist. Widerstand (GW)</td><td><span id="aw_gw"></span></td></tr>
-		<tr><td>Kampfskill</td><td><span id="fight_skill"></span></td></tr>
-		<tr><td>Magieskill</td><td><span id="magic_skill"></span></td></tr>
-		<tr><td>Waffe</td><td><span id="weapon"></span></td></tr>
-		<tr><td>Zauber</td><td><span id="spells"></span></td></tr>
-	</table>
-	<button onclick="Gen.generate('warrior')">Krieger</button>
-	<button onclick="Gen.generate('archer')">Späher</button>
-	<button onclick="Gen.generate('mage')">Magier</button>
+<br><br>
+	<div class="container">
+		<div class="card">
+			<h3 class="card-header">Splittermond CharGen by jaritt</h3>
+				<div class="card-block">
+					<h4 class="card-title"> <span id="race"></span></h4>
+					<p class="card-text">
+						<div class="container">
+							<div class="row">
+								<div class="col">
+									<table class="table table-hover table-bordered table-striped">
+										<tr><td>Größenkategorie (GK)</td><td><span id="aw_gk"></span></td></tr>
+										<tr><td>Geschwindigkeit (GSW)</td><td><span id="aw_gsw"></span></td></tr>
+										<tr><td>Lebenspunkte (LP)</td><td><span id="aw_lp"></span></td></tr>
+										<tr><td>Fokus (FO)</td><td><span id="aw_fo"></span></td></tr>
+									</table>
+								</div>
+								<div class="col">
+									<table class="table table-hover table-bordered table-striped">
+										<tr><td>Verteidigung (VTD)</td><td><span id="aw_vtd"></span></td></tr>
+										<tr><td>Schadensreduktion (SR)</td><td><span id="aw_sr"></span></td></tr>
+										<tr><td>Körp. Widerstand (KW)</td><td><span id="aw_kw"></span></td></tr>
+										<tr><td>Geist. Widerstand (GW)</td><td><span id="aw_gw"></span></td></tr>
+									</table>
+								</div>
+							</div>
+							<br>
+							<div class="row">
+								<div class="col">
+									<table class="table table-hover table-bordered table-striped">
+										<tr><td>Kampfskill</td><td><span id="fight_skill"></span></td></tr>
+										<tr><td>Magieskill</td><td><span id="magic_skill"></span></td></tr>
+									</table>
+								</div>
+								<div class="col">
+									<table class="table table-hover table-bordered table-striped">
+										<tr><td>Waffe</td><td><span id="weapon"></span></td></tr>
+										<tr><td>Zauber</td><td><span id="spells"></span></td></tr>
+									</table>
+								</div>
+							</div>
+							<br>
+							<div class="row text-center">
+								<div class="col">
+									<p><button type="button" class="btn btn-primary" onclick="Gen.generate('warrior')">Krieger</button></p>
+								</div>
+								<div class="col">
+									<p><button type="button" class="btn btn-primary" onclick="Gen.generate('archer')">Späher</button></p>
+								</div>
+								<div class="col">
+									<p><button type="button" class="btn btn-primary" onclick="Gen.generate('mage')">Magier</button></p>
+								</div>
+							</div>
+						</div>
+					</p>
 
-	<script type="text/javascript">$(document).ready(function(){
-		Gen.generate("warrior");
-		});</script>
+						<script type="text/javascript">$(document).ready(function(){
+							Gen.generate("warrior");
+							});
+						</script>
+				</div>
+		</div>
+	</div>
 </body>
 </html>
