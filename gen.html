@@ -495,7 +495,7 @@
 					return (item.kind == "heavy" || item.kind == "light");
 				});
 				weapon = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
-				return weapon.name + "; " + weapon.wgs + " Ticks" + "; " + weapon.dmg;
+				return Gen.formattedWeaponList([weapon]);
 			}
 			if (Gen.params.stereotype == "archer") {
 				choosen_weapons = Gen.presets.weapons.filter(function(item) {
@@ -506,19 +506,14 @@
 					return (item.kind == "secondary");
 				});
 				weapon_meele = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
-				tmp = weapon_range.name + "; " + weapon_range.wgs + " Ticks" + "; " + weapon_range.dmg;
-				weapon_range.extra ? tmp += " [" + weapon_range.extra + "]" : false;
-				tmp += "<br>";
-				tmp += weapon_meele.name + "; " + weapon_meele.wgs + " Ticks" + "; " + weapon_meele.dmg;
-				weapon_meele.extra ? tmp += " [" + weapon_meele.extra + "]" : false;
-				return tmp;
+				return Gen.formattedWeaponList([weapon_range, weapon_meele]);
 			}
 			if (Gen.params.stereotype == "mage") {
 				choosen_weapons = Gen.presets.weapons.filter(function(item) {
 					return (item.kind == "mage" || item.kind == "secondary");
 				});
 				weapon = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
-				return weapon.name + "; " + weapon.wgs + " Ticks" + "; " + weapon.dmg;
+				return Gen.formattedWeaponList([weapon]);
 			}
 		}
 
@@ -541,16 +536,28 @@
 		}
 
 		Gen.formattedSpellList = function(spelllist) {
+			return Gen.buildListWith(spelllist, Gen.formatSpell);
+		}
+
+		Gen.buildListWith = function(list, func) {
 			answer = "<ul>";
-			spelllist.forEach(function(spell) {
-				answer += "<li>" + Gen.formatSpell(spell) + "<i>";
+			list.forEach(function(item) {
+				answer += "<li>" + func(item) + "</li>";
 			});
 			return answer + "</ul>";
 		}
 
 		Gen.formatSpell = function(spell) {
-			basics = [spell.costs, spell.ticks + "T", spell.difficulty].join(" - ");
+			basics = [spell.costs, spell.ticks + " Ticks", spell.difficulty].join(" - ");
 			return all = [spell.name, basics, spell.effect, "<i>" + spell.extra + "</i>"].join("<br>");
+		}
+
+		Gen.formattedWeaponList = function(weaponlist) {
+			return Gen.buildListWith(weaponlist, Gen.formatWeapon);
+		}
+
+		Gen.formatWeapon = function(weapon) {
+			return weapon.name + "; " + weapon.wgs + " Ticks" + "; " + weapon.dmg;;
 		}
 
 
