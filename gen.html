@@ -343,6 +343,10 @@
 			{
 				name: "Feuerstrahl",
 				descr: "5V2|8T|VTD:Ziel|2W6+5",
+				costs: "5V2",
+				ticks: 8,
+				difficulty: "VTD: Ziel",
+				effect: "2W6+5",
 				mage_only: true,
 				damage: true,
 				tier: 2,
@@ -351,6 +355,10 @@
 			{
 				name: "Geh noch nicht", 
 				descr: "K8V2|5T|21|Setzt Sterb.1+2 aus",
+				costs: "K8V2",
+				ticks: 5,
+				difficulty: 21,
+				effect: "Setzt Sterbend 1+2 aus",
 				mage_only: true,
 				damage: false,
 				tier: 2,
@@ -359,6 +367,10 @@
 			{
 				name: "Tiere beherrschen",
 				descr: "K8V2|6T|GW:Ziel|Kontrolle(GK7)",
+				costs: "K8V2",
+				ticks: 6,
+				difficulty: "GW: Ziel",
+				effect: "Kontrolle bis GK 7",
 				mage_only: true,
 				damage: false,
 				tier: 2,
@@ -367,6 +379,10 @@
 			{
 				name: "Rindenhaut",
 				descr: "K4V1|3T|18|+1 VTD, +1 SR",
+				costs: "K4V1",
+				ticks: 3,
+				difficulty: 18,
+				effect: "+1 VTD, +1 SR",
 				damage: false,
 				tier: 1,
 				extra: "2EG/K1V1 +1 extra SR"
@@ -374,6 +390,10 @@
 			{
 				name: "Schmerzen widerstehen",
 				descr: "K8V2|4T|21|-3 Wundabzüge",
+				costs: "K8V2",
+				ticks: 4,
+				difficulty: 21,
+				effect: "-3 Wundabzüge",
 				tier: 1,
 				damage: false,
 				extra: "1EG/K2V2 -4 Wundabzüge"
@@ -510,20 +530,27 @@
 				possible_spells = Gen.presets.spells.filter(function(item) {
 					return !(item.damage);
 				});
-				dmg_spell = randomItem(possible_dmg_spells);
-				spell = randomItem(possible_spells);
-				return Gen.formatSpell(dmg_spell) + "<br>" + Gen.formatSpell(spell);
+				return Gen.formattedSpellList([randomItem(possible_dmg_spells), randomItem(possible_spells)]);
 			}else{
 				possible_spells = Gen.presets.spells.filter(function(item) {
 					return !(item.mage_only);
 				});
 				spell = randomItem(possible_spells);
-				return Gen.formatSpell(spell);
+				return Gen.formattedSpellList([spell]);
 			}
 		}
 
+		Gen.formattedSpellList = function(spelllist) {
+			answer = "<ul>";
+			spelllist.forEach(function(spell) {
+				answer += "<li>" + Gen.formatSpell(spell) + "<i>";
+			});
+			return answer + "</ul>";
+		}
+
 		Gen.formatSpell = function(spell) {
-			return (spell.name + " " + spell.descr + " <i>" + spell.extra + "</i>").replace(/\|/g, " | ");
+			basics = [spell.costs, spell.ticks + "T", spell.difficulty].join(" - ");
+			return all = [spell.name, basics, spell.effect, "<i>" + spell.extra + "</i>"].join("<br>");
 		}
 
 
