@@ -512,16 +512,18 @@
 				});
 				dmg_spell = randomItem(possible_dmg_spells);
 				spell = randomItem(possible_spells);
-				answer = dmg_spell.name + " " + dmg_spell.descr + " [" + dmg_spell.extra + "]";
-				answer += "<br>" + spell.name + " " + spell.descr + " [" + spell.extra + "]";
-				return answer.replace(/\|/g, " | ");
+				return Gen.formatSpell(dmg_spell) + "<br>" + Gen.formatSpell(spell);
 			}else{
 				possible_spells = Gen.presets.spells.filter(function(item) {
 					return !(item.mage_only);
 				});
 				spell = randomItem(possible_spells);
-				return (spell.name + " " + spell.descr).replace(/\|/g, " | ") + " [" + spell.extra + "]";
+				return Gen.formatSpell(spell);
 			}
+		}
+
+		Gen.formatSpell = function(spell) {
+			return (spell.name + " " + spell.descr + " <i>" + spell.extra + "</i>").replace(/\|/g, " | ");
 		}
 
 
@@ -597,8 +599,8 @@
 								</div>
 								<div class="col">
 									<table class="table table-bordered">
-										<tr><td>Waffe</td><td><span id="weapon"></span></td></tr>
-										<tr><td>Zauber</td><td><span id="spells"></span></td></tr>
+										<tr><td>Waffe<br><span id="weapon"></span></td></tr>
+										<tr><td>Zauber<br><span id="spells"></span></td></tr>
 									</table>
 								</div>
 							</div>
