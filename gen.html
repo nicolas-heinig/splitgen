@@ -548,7 +548,7 @@
 		}
 
 		Gen.formatSpell = function(spell) {
-			basics = [spell.costs, spell.ticks + " Ticks", spell.difficulty].join(" - ");
+			basics = [spell.costs, spell.ticks + " Ticks", spell.difficulty].join(" | ");
 			return all = [spell.name, basics, spell.effect, "<i>" + spell.extra + "</i>"].join("<br>");
 		}
 
