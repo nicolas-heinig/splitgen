@@ -18,12 +18,23 @@
 		function randomItem(tarray) {
 			return tarray[[Math.floor(Math.random()*tarray.length)]];
 		}
+		function isInArray(arr, item){
+			return (-1 < arr.indexOf(item));
+		}
 
 		Gen = new Object();
 
 		Gen.presets = {}
 
 		Gen.presets.warrior = {
+			weapons: [
+				{
+					kind: ["heavy", "light"]
+				},
+				{
+					kind: ["secondary"]
+				}
+			],
 			gsw: {
 				base: [5,6],
 				level: function(level){
@@ -108,6 +119,14 @@
 		}
 
 		Gen.presets.archer = {
+			weapons: [
+				{
+					kind: ["range"]
+				},
+				{
+					kind: ["secondary"]
+				}
+			],
 			gsw: {
 				base: [8,10],
 				level: function(level){
@@ -192,6 +211,11 @@
 		}
 
 		Gen.presets.mage = {
+			weapons: [
+				{
+					kind: ["secondary", "mage"]
+				}
+			],
 			gsw: {
 				base: [7,9],
 				level: function(level){
@@ -490,31 +514,15 @@
 		}
 
 		Gen.get_weapon = function() {
-			if (Gen.params.stereotype == "warrior") {
+			stereotype = Gen.presets[Gen.params.stereotype];
+			weapon_list = [];
+			stereotype.weapons.forEach(function(weapon){
 				choosen_weapons = Gen.presets.weapons.filter(function(item) {
-					return (item.kind == "heavy" || item.kind == "light");
+					return isInArray(weapon.kind, item.kind);
 				});
-				weapon = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
-				return Gen.formattedWeaponList([weapon]);
-			}
-			if (Gen.params.stereotype == "archer") {
-				choosen_weapons = Gen.presets.weapons.filter(function(item) {
-					return (item.kind == "range");
-				});
-				weapon_range = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
-				choosen_weapons = Gen.presets.weapons.filter(function(item) {
-					return (item.kind == "secondary");
-				});
-				weapon_meele = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
-				return Gen.formattedWeaponList([weapon_range, weapon_meele]);
-			}
-			if (Gen.params.stereotype == "mage") {
-				choosen_weapons = Gen.presets.weapons.filter(function(item) {
-					return (item.kind == "mage" || item.kind == "secondary");
-				});
-				weapon = choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]];
-				return Gen.formattedWeaponList([weapon]);
-			}
+				weapon_list.push(choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]]);
+			});
+			return Gen.formattedWeaponList(weapon_list);
 		}
 
 		Gen.get_spells = function() {
