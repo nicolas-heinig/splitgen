@@ -35,6 +35,13 @@
 					kind: ["secondary"]
 				}
 			],
+			spells: [
+				{
+					damage: false,
+					tier_modifier: -1, // Default tier is level + 1 (+2 for difficulty 4)
+										// So a warrior level 1 could now have spells of tier 0 and 1 in this spot
+				}
+			],
 			gsw: {
 				base: [5,6],
 				level: function(level){
@@ -127,6 +134,13 @@
 					kind: ["secondary"]
 				}
 			],
+			spells: [
+				{
+					damage: false,
+					tier_modifier: -1, // Default tier is level + 1 (+2 for difficulty 4)
+										// So an archer level 2 could now have spells of tier 0-2 in this spot
+				}
+			],
 			gsw: {
 				base: [8,10],
 				level: function(level){
@@ -214,6 +228,16 @@
 			weapons: [
 				{
 					kind: ["secondary", "mage"]
+				}
+			],
+			spells: [
+				{
+					damage: true,
+					tier_modifier: 0, 
+				},
+				{
+					damage: false,
+					tier_modifier: 0, 
 				}
 			],
 			gsw: {
@@ -516,9 +540,9 @@
 		Gen.get_weapon = function() {
 			stereotype = Gen.presets[Gen.params.stereotype];
 			weapon_list = [];
-			stereotype.weapons.forEach(function(weapon){
-				choosen_weapons = Gen.presets.weapons.filter(function(item) {
-					return isInArray(weapon.kind, item.kind);
+			stereotype.weapons.forEach(function(preset_definition){
+				choosen_weapons = Gen.presets.weapons.filter(function(weapon) {
+					return isInArray(preset_definition.kind, weapon.kind);
 				});
 				weapon_list.push(choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]]);
 			});
@@ -526,21 +550,17 @@
 		}
 
 		Gen.get_spells = function() {
-			if (Gen.params.stereotype == "mage") {
-				possible_dmg_spells = Gen.presets.spells.filter(function(item) {
-					return item.damage;
-				});
-				possible_spells = Gen.presets.spells.filter(function(item) {
-					return !(item.damage);
-				});
-				return Gen.formattedSpellList([randomItem(possible_dmg_spells), randomItem(possible_spells)]);
-			}else{
-				possible_spells = Gen.presets.spells.filter(function(item) {
-					return !(item.mage_only);
-				});
-				spell = randomItem(possible_spells);
-				return Gen.formattedSpellList([spell]);
-			}
+			stereotype = Gen.presets[Gen.params.stereotype];
+			spell_list = [];
+			stereotype.spells.forEach(function(preset_definition) {
+				possible_spells = Gen.presets.spells.filter(function(spell) {
+					max_tier = Gen.params.level + 1 + preset_definition.tier_modifier;
+					return (spell.damage == preset_definition.damage && 
+							max_tier >= spell.tier);
+				})
+				spell_list.push(randomItem(possible_spells));
+			});
+			return Gen.formattedSpellList(spell_list);
 		}
 
 		Gen.formattedSpellList = function(spelllist) {
