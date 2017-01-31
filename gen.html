@@ -27,6 +27,7 @@
 		Gen.presets = {}
 
 		Gen.presets.warrior = {
+			display_name: "Krieger",
 			weapons: [
 				{
 					kind: ["heavy", "light"]
@@ -126,6 +127,7 @@
 		}
 
 		Gen.presets.archer = {
+			display_name: "Späher",
 			weapons: [
 				{
 					kind: ["range"]
@@ -225,6 +227,7 @@
 		}
 
 		Gen.presets.mage = {
+			display_name: "Magier", 
 			weapons: [
 				{
 					kind: ["secondary", "mage"]
@@ -469,7 +472,8 @@
 			Gen.params.stereotype = stereo;
 			Gen.set_params();
 			Gen.race();
-			$("#race").text(Gen.model.race.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}))
+			$("#race").text(Gen.model.race.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
+			$("#stereotype").text(Gen.presets[Gen.params.stereotype].display_name);
 			$("#aw_gk").text(Gen.aw_gk());
 
 			["gsw", "lp", "fo", "vtd", "sr", "kw", "gw"].forEach(function(aw_name){
@@ -599,7 +603,7 @@
 	<div class="container" id="splitgen_container">
 
 		<div class="card">
-			<h3 class="card-header">Splittermond CharGen by jaritt</h3>
+			<h3 class="card-header">Splittermond CharGen <small>by jaritt</small></h3>
 				<div class="card-block">
 
 							<div class="row text-center">
@@ -612,7 +616,7 @@
 								  <button type="button" class="btn btn-secondary" onclick="Gen.generate('mage')">Magier</button>
 							</div>
 							<br><br>
-							<div class="col-4"><h4 class="card-title"> <span id="race"></span></h4></div>
+							<div class="col-4"><h4 class="card-title"><span id="stereotype"></span> - <span id="race"></span></h4></div>
 							<div class="row">
 								<div class="col">
 									<table class="table table-bordered table-striped tcentered">
