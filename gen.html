@@ -565,16 +565,16 @@
 		}
 
 		Gen.buildListWith = function(list, func) {
-			answer = "<ul>";
+			answer = "";
 			list.forEach(function(item) {
-				answer += "<li>" + func(item) + "</li>";
+				answer += "" + func(item) + "<br>";
 			});
-			return answer + "</ul>";
+			return answer + "";
 		}
 
 		Gen.formatSpell = function(spell) {
 			basics = [spell.costs, spell.ticks + " Ticks", spell.difficulty].join(" | ");
-			return all = [spell.name, basics, spell.effect, "<i>" + spell.extra + "</i>"].join("<br>");
+			return all = ["<b>" + spell.name + "</b>", basics, spell.effect, "<i>" + spell.extra + "</i>"].join("<br>");
 		}
 
 		Gen.formattedWeaponList = function(weaponlist) {
@@ -606,7 +606,6 @@
 							</div>
 					<p class="card-text">
 						<div class="container">
-
 							<div class="btn-group" role="group" aria-label="Basic example">
 								  <button type="button" class="btn btn-secondary" onclick="Gen.generate('warrior')">Krieger</button>
 								  <button type="button" class="btn btn-secondary" onclick="Gen.generate('archer')">Späher</button>
@@ -658,8 +657,8 @@
 								</div>
 								<div class="col">
 									<table class="table table-bordered">
-										<tr><td>Waffe<br><span id="weapon"></span></td></tr>
-										<tr><td>Zauber<br><span id="spells"></span></td></tr>
+										<tr><td><!-- Waffe --><span id="weapon"></span></td></tr>
+										<tr><td><!-- Zauber --><span id="spells"></span></td></tr>
 									</table>
 								</div>
 							</div>
