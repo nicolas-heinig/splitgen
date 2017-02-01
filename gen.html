@@ -482,8 +482,23 @@
 			
 			$("#fight_skill").text(Gen.fight_skill());
 			$("#magic_skill").text(Gen.magic_skill());
-			$("#weapon").html(Gen.get_weapon());
+			Gen.showWeapons();
 			$("#spells").html(Gen.get_spells());
+		}
+
+		Gen.showWeapons = function() {
+			weapons = Gen.get_weapon();
+			wName = "";
+			wTick = "";
+			wDmg = "";
+			weapons.forEach(function(weapon) {
+				wName += weapon.name + "<br>";
+				wTick += weapon.wgs + " Ticks<br>";
+				wDmg += weapon.dmg + "<br>";
+			});
+			$("#weapon_name").html(wName);
+			$("#weapon_tick").html(wTick);
+			$("#weapon_dmg").html(wDmg);
 		}
 
 		Gen.set_params = function(){
@@ -547,7 +562,8 @@
 				});
 				weapon_list.push(choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]]);
 			});
-			return Gen.formattedWeaponList(weapon_list);
+			console.log(weapon_list);
+			return weapon_list;
 		}
 
 		Gen.get_spells = function() {
@@ -616,7 +632,9 @@
 								  <button type="button" class="btn btn-secondary" onclick="Gen.generate('mage')">Magier</button>
 							</div>
 							<br><br>
-							<div class="col-4"><h4 class="card-title"><span id="stereotype"></span> - <span id="race"></span></h4></div>
+							<div class="col-4"><h4 class="card-title">
+								<span id="stereotype"></span> - <span id="race"></span>
+							</h4></div>
 							<div class="row">
 								<div class="col">
 									<table class="table table-bordered table-striped tcentered">
@@ -661,8 +679,12 @@
 								</div>
 								<div class="col">
 									<table class="table table-bordered">
-										<tr><td><!-- Waffe --><span id="weapon"></span></td></tr>
-										<tr><td><!-- Zauber --><span id="spells"></span></td></tr>
+										<tr>
+											<td><span id="weapon_name"></span></td>
+											<td><span id="weapon_tick"></span></td>
+											<td><span id="weapon_dmg"></span></td>
+										</tr>
+										<tr><td colspan="3"><span id="spells"></span></td></tr>
 									</table>
 								</div>
 							</div>
