@@ -488,12 +488,12 @@
 
 		Gen.showWeapons = function() {
 			weapons = Gen.get_weapon();
-			wName = "";
-			wTick = "";
-			wDmg = "";
+			wName = "<small>Waffe</small><br>";
+			wTick = "<small>WGS</small><br>";
+			wDmg = "<small>Schaden</small><br>";
 			weapons.forEach(function(weapon) {
 				wName += weapon.name + "<br>";
-				wTick += weapon.wgs + " <small>Ticks</small><br>";
+				wTick += weapon.wgs + "<br>";
 				wDmg += weapon.dmg + "<br>";
 			});
 			$("#weapon_name").html(wName);
@@ -596,15 +596,6 @@
 			basics = [spell.costs, spell.ticks + " Ticks", spell.difficulty].join(" | ");
 			return all = ["<b>" + spell.name + "</b>", basics, spell.effect, "<i>" + spell.extra + "</i>"].join("<br>");
 		}
-
-		Gen.formattedWeaponList = function(weaponlist) {
-			return Gen.buildListWith(weaponlist, Gen.formatWeapon);
-		}
-
-		Gen.formatWeapon = function(weapon) {
-			return weapon.name + "; " + weapon.wgs + " Ticks" + "; " + weapon.dmg;;
-		}
-
 
 	</script>
 
