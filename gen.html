@@ -330,19 +330,19 @@
 			{
 				name: "Kurzschwert",
 				wgs: 7,
-				dmg: "W6 + 2",
+				dmg: "W6+2",
 				kind: "light"
 			},
 			{
 				name: "Langschwert",
 				wgs: 8,
-				dmg: "W6 + 4",
+				dmg: "W6+4",
 				kind: "light"
 			},
 			{
 				name: "Dolch", 
 				wgs: 6,
-				dmg: "W6 + 1",
+				dmg: "W6+1",
 				kind: "secondary"
 			},
 			{
@@ -355,37 +355,37 @@
 			{
 				name: "Kampfstab",
 				wgs: 9, 
-				dmg: "W10 + 2",
+				dmg: "W10+2",
 				kind: "mage"
 			},
 			{
 				name: "Streitkolben",
 				wgs: 9,
-				dmg: "W6 + 5",
+				dmg: "W6+5",
 				kind: "heavy"
 			},
 			{
 				name: "Kriegsbeil",
 				wgs: 9,
-				dmg: "W10 + 3",
+				dmg: "W10+3",
 				kind: "heavy"
 			},
 			{
 				name: "Kurzbogen",
 				wgs: 6,
-				dmg: "W10 + 1",
+				dmg: "W10+1",
 				kind: "range"
 			},
 			{
 				name: "Langbogen", 
 				wgs: 10,
-				dmg: "W10 + 8",
+				dmg: "W10+8",
 				kind: "range"
 			},
 			{
 				name: "Leichte Armbrust",
 				wgs: 10,
-				dmg: "2W6 + 6",
+				dmg: "2W6+6",
 				kind: "range"
 			}
 		]
@@ -493,7 +493,7 @@
 			wDmg = "";
 			weapons.forEach(function(weapon) {
 				wName += weapon.name + "<br>";
-				wTick += weapon.wgs + " Ticks<br>";
+				wTick += weapon.wgs + " <small>Ticks</small><br>";
 				wDmg += weapon.dmg + "<br>";
 			});
 			$("#weapon_name").html(wName);
