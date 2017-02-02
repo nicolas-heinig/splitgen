@@ -39,8 +39,14 @@
 			spells: [
 				{
 					damage: false,
+					chance: 1, // Change, that this slot will be filled
 					tier_modifier: -1, // Default tier is level + 1 (+2 for difficulty 4)
 										// So a warrior level 1 could now have spells of tier 0 and 1 in this spot
+				},
+				{
+					damage: false,
+					chance: 0.2,
+					tier_modifier: -1, 
 				}
 			],
 			gsw: {
@@ -562,7 +568,6 @@
 				});
 				weapon_list.push(choosen_weapons[[Math.floor(Math.random()*choosen_weapons.length)]]);
 			});
-			console.log(weapon_list);
 			return weapon_list;
 		}
 
@@ -570,6 +575,7 @@
 			stereotype = Gen.presets[Gen.params.stereotype];
 			spell_list = [];
 			stereotype.spells.forEach(function(preset_definition) {
+				if (preset_definition.chance && preset_definition.chance <= Math.random()) return;
 				possible_spells = Gen.presets.spells.filter(function(spell) {
 					max_tier = Gen.params.level + 1 + preset_definition.tier_modifier;
 					return (spell.damage == preset_definition.damage && 
@@ -617,10 +623,7 @@
 							</div>
 					<p class="card-text">
 						<div class="container">
-							<div class="btn-group" role="group" aria-label="Basic example">
-								  <button type="button" class="btn btn-secondary" onclick="Gen.generate('warrior')">Krieger</button>
-								  <button type="button" class="btn btn-secondary" onclick="Gen.generate('archer')">Späher</button>
-								  <button type="button" class="btn btn-secondary" onclick="Gen.generate('mage')">Magier</button>
+							<div id="generation_buttons" class="btn-group" role="group">
 							</div>
 							<br><br>
 							<div class="col-4"><h4 class="card-title" style="white-space: nowrap;">
@@ -683,9 +686,18 @@
 						</div>
 					</p>
 
-						<script type="text/javascript">$(document).ready(function(){
+						<script type="text/javascript">
+						$(document).ready(function(){
 							Gen.generate("warrior");
-							});
+							// Create generate buttons
+							for(key in Gen.presets){
+								if (!isInArray(["weapons", "spells"], key)) {
+									html = '<button type="button" class="btn btn-secondary" onclick="Gen.generate(\''+ key +'\')">'+ Gen.presets[key].display_name +'</button>';
+									$("#generation_buttons").append(html);
+								}
+							}
+						});
+
 						</script>
 				</div>
 		</div>
